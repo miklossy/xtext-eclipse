@@ -102,21 +102,34 @@ public class RuleEngineValidator extends AbstractRuleEngineValidator {
   @Check
   public void checkRuleRecursion(final XFeatureCall featureCall) {
     final Rule containingRule = EcoreUtil2.<Rule>getContainerOfType(featureCall, Rule.class);
-    if (((((containingRule != null) && (featureCall.getFeature() instanceof JvmOperation)) && Objects.equal(featureCall.getConcreteSyntaxFeatureName(), "fire")) && (featureCall.getFeatureCallArguments().size() == 1))) {
-      final XExpression argument = IterableExtensions.<XExpression>head(featureCall.getFeatureCallArguments());
-      if ((argument instanceof XAbstractFeatureCall)) {
-        final EObject sourceElem = this._iJvmModelAssociations.getPrimarySourceElement(((XAbstractFeatureCall)argument).getFeature());
-        org.eclipse.xtext.example.homeautomation.ruleEngine.State _deviceState = containingRule.getDeviceState();
-        boolean _equals = Objects.equal(sourceElem, _deviceState);
-        if (_equals) {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("Firing the same device state that triggers the rule \"");
-          String _description = containingRule.getDescription();
-          _builder.append(_description);
-          _builder.append("\" may lead to endless recursion.");
-          this.warning(_builder.toString(), featureCall, XbasePackage.Literals.XFEATURE_CALL__FEATURE_CALL_ARGUMENTS, 0);
+    boolean _isRecursive = this.isRecursive(featureCall);
+    if (_isRecursive) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("Firing the same device state that triggers the rule \"");
+      String _description = containingRule.getDescription();
+      _builder.append(_description);
+      _builder.append("\" may lead to endless recursion.");
+      this.warning(_builder.toString(), featureCall, XbasePackage.Literals.XFEATURE_CALL__FEATURE_CALL_ARGUMENTS, 0);
+    }
+  }
+  
+  public boolean isRecursive(final XFeatureCall featureCall) {
+    boolean _xblockexpression = false;
+    {
+      final Rule containingRule = EcoreUtil2.<Rule>getContainerOfType(featureCall, Rule.class);
+      if (((((containingRule != null) && (featureCall.getFeature() instanceof JvmOperation)) && Objects.equal(featureCall.getConcreteSyntaxFeatureName(), "fire")) && (featureCall.getFeatureCallArguments().size() == 1))) {
+        final XExpression argument = IterableExtensions.<XExpression>head(featureCall.getFeatureCallArguments());
+        if ((argument instanceof XAbstractFeatureCall)) {
+          final EObject sourceElem = this._iJvmModelAssociations.getPrimarySourceElement(((XAbstractFeatureCall)argument).getFeature());
+          org.eclipse.xtext.example.homeautomation.ruleEngine.State _deviceState = containingRule.getDeviceState();
+          boolean _equals = Objects.equal(sourceElem, _deviceState);
+          if (_equals) {
+            return true;
+          }
         }
       }
+      _xblockexpression = false;
     }
+    return _xblockexpression;
   }
 }

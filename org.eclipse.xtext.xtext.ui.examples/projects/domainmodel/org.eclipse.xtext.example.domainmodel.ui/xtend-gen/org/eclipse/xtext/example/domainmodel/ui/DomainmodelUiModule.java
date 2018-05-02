@@ -8,10 +8,12 @@ import com.google.inject.name.Names;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.example.domainmodel.ui.AbstractDomainmodelUiModule;
 import org.eclipse.xtext.example.domainmodel.ui.autoedit.FantasticEditStrategyProvider;
+import org.eclipse.xtext.example.domainmodel.ui.editor.DomainmodelEditorEx;
 import org.eclipse.xtext.example.domainmodel.ui.linking.DomainmodelLinkingDiagnosticMessageProvider;
 import org.eclipse.xtext.example.domainmodel.ui.navigation.DomainmodelHyperlinkHelper;
 import org.eclipse.xtext.example.domainmodel.ui.outline.FilterOperationsContribution;
 import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper;
 import org.eclipse.xtext.ui.editor.outline.actions.IOutlineContribution;
@@ -42,5 +44,10 @@ public class DomainmodelUiModule extends AbstractDomainmodelUiModule {
   public void configureFilterOperationsOutlineContribution(final Binder binder) {
     binder.<IOutlineContribution>bind(IOutlineContribution.class).annotatedWith(Names.named("FilterOperationsContribution")).to(
       FilterOperationsContribution.class);
+  }
+  
+  @Override
+  public Class<? extends XtextEditor> bindXtextEditor() {
+    return DomainmodelEditorEx.class;
   }
 }

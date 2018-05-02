@@ -23,4 +23,33 @@
         enabled="true">op ${name} (${paramType1} ${paramName1}) : ${returnType} {
 	${cursor}
 }</template>
+<template 
+	id="Example Template" autoinsert="true"
+	context="org.eclipse.xtext.example.domainmodel.Domainmodel.DomainModel" deleted="false"
+	description="Insert an example" enabled="true" name="Example">import java.util.List&#13;
+&#13;
+entity Blog {&#13;
+	title: String&#13;
+	posts: List&lt;Post&gt;&#13;
+	&#13;
+	op addPost(Post post) : void {}&#13;
+	op getPosts() : List&lt;Post&gt; {}&#13;
+}&#13;
+&#13;
+entity HasAuthor {&#13;
+	author: String&#13;
+	&#13;
+	op getAuthor() : String {}&#13;
+	op setAuthor() : void {}&#13;
+}&#13;
+&#13;
+entity Post extends HasAuthor {&#13;
+	title: String&#13;
+	content: String&#13;
+	comments: List&lt;Comment&gt;&#13;
+}&#13;
+&#13;
+entity Comment extends HasAuthor {&#13;
+	content: String&#13;
+}</template>
 </templates>

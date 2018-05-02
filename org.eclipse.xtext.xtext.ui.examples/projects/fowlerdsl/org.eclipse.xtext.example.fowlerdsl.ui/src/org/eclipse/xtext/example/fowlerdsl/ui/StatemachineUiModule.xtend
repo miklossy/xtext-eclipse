@@ -4,6 +4,8 @@
 package org.eclipse.xtext.example.fowlerdsl.ui
 
 import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.xtext.example.fowlerdsl.ui.editor.StatemachineEditor
 
 /** 
  * Use this class to register components to be used within the IDE.
@@ -11,5 +13,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin
 class StatemachineUiModule extends org.eclipse.xtext.example.fowlerdsl.ui.AbstractStatemachineUiModule {
 	new(AbstractUIPlugin plugin) {
 		super(plugin)
+	}
+	
+	def Class<? extends XtextEditor> bindXtextEditor() {
+		StatemachineEditor
 	}
 }

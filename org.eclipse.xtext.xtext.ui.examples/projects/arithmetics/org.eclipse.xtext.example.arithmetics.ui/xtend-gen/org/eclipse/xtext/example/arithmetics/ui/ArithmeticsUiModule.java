@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, 2017 itemis AG (http://www.itemis.eu) and others.
+ * Copyright (c) 2015, 2018 itemis AG (http://www.itemis.eu) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ import com.google.inject.name.Names;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.example.arithmetics.ui.AbstractArithmeticsUiModule;
 import org.eclipse.xtext.example.arithmetics.ui.autoedit.AutoEditStrategy;
+import org.eclipse.xtext.example.arithmetics.ui.editor.ArithmeticsEditor;
 import org.eclipse.xtext.resource.containers.IAllContainersState;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
@@ -46,5 +47,9 @@ public class ArithmeticsUiModule extends AbstractArithmeticsUiModule {
   
   public void configureEditorScope(final Binder binder) {
     binder.bindConstant().annotatedWith(Names.named(XtextEditor.KEY_BINDING_SCOPE)).to("org.eclipse.xtext.example.arithmetics.ui.editor.XtextEditorScope");
+  }
+  
+  public Class<? extends XtextEditor> bindXtextEditor() {
+    return ArithmeticsEditor.class;
   }
 }

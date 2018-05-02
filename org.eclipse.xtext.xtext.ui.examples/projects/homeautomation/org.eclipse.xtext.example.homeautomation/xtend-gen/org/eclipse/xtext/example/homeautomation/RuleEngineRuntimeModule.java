@@ -4,10 +4,16 @@
 package org.eclipse.xtext.example.homeautomation;
 
 import org.eclipse.xtext.example.homeautomation.AbstractRuleEngineRuntimeModule;
+import org.eclipse.xtext.example.homeautomation.generator.RuleEngineDotGenerator;
+import org.eclipse.xtext.generator.IGenerator;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
 public class RuleEngineRuntimeModule extends AbstractRuleEngineRuntimeModule {
+  @Override
+  public Class<? extends IGenerator> bindIGenerator() {
+    return RuleEngineDotGenerator.class;
+  }
 }

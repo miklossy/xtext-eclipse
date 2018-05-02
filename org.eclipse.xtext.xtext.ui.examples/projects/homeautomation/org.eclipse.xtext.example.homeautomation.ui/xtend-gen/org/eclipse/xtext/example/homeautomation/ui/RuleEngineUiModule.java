@@ -6,6 +6,8 @@ package org.eclipse.xtext.example.homeautomation.ui;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 import org.eclipse.xtext.example.homeautomation.ui.AbstractRuleEngineUiModule;
+import org.eclipse.xtext.example.homeautomation.ui.editor.RuleEngineEditorEx;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -13,6 +15,11 @@ import org.eclipse.xtext.example.homeautomation.ui.AbstractRuleEngineUiModule;
 @FinalFieldsConstructor
 @SuppressWarnings("all")
 public class RuleEngineUiModule extends AbstractRuleEngineUiModule {
+  @Override
+  public Class<? extends XtextEditor> bindXtextEditor() {
+    return RuleEngineEditorEx.class;
+  }
+  
   public RuleEngineUiModule(final AbstractUIPlugin plugin) {
     super(plugin);
   }

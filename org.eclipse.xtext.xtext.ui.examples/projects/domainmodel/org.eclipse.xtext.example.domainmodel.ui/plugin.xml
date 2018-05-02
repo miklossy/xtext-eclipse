@@ -614,7 +614,7 @@
 	</extension>
 
 	<!-- code mining -->
-	<extension point="org.eclipse.ui.workbench.texteditor.codeMiningProviders">
+<!--	<extension point="org.eclipse.ui.workbench.texteditor.codeMiningProviders">
 		<codeMiningProvider
 			class="org.eclipse.xtext.example.domainmodel.ui.DomainmodelExecutableExtensionFactory:org.eclipse.jface.text.codemining.ICodeMiningProvider"
 			id="org.eclipse.xtext.example.domainmodel.Domainmodel.CodeMiningProvider"
@@ -631,7 +631,7 @@
 			</enabledWhen>
 		</codeMiningProvider>
 	</extension>
-	
+-->	
 	<!-- manual additions start here -->
 	<extension point="org.eclipse.xtext.ui.searchFilter">
 		<filter
@@ -676,5 +676,57 @@
 				<reference definitionId="org.eclipse.xtext.example.domainmodel.Domainmodel.Editor.opened" />
 			</activeWhen>
 		</handler>
+	</extension>
+	
+		<!-- Visualization context menu -->
+	<extension
+		point="org.eclipse.ui.commands">
+		<command name="Visualize"
+			id="org.eclipse.xtext.example.domainmodel.ui.commands.VisualizationCommand">
+		</command>
+	</extension>
+	
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler
+			class="org.eclipse.xtext.example.domainmodel.ui.DomainmodelExecutableExtensionFactory:org.eclipse.xtext.example.domainmodel.ui.visualization.VisualizationHandler"
+			commandId="org.eclipse.xtext.example.domainmodel.ui.commands.VisualizationCommand">
+		</handler>
+	</extension>
+	
+	<!-- Add Visualization context menu to the Package Explorer --> 
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+			<command
+				commandId="org.eclipse.xtext.example.domainmodel.ui.commands.VisualizationCommand"
+				icon="icons/GEF-logo.png"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<adapt type="org.eclipse.core.resources.IResource">
+							<test property="org.eclipse.core.resources.name" value="*.dmodel"/>
+						</adapt>
+					</iterate>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	
+	<!-- Add Visualization context menu to the Project Explorer --> 
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu">
+			<command
+				commandId="org.eclipse.xtext.example.domainmodel.ui.commands.VisualizationCommand"
+				icon="icons/GEF-logo.png"
+				style="push">
+				<visibleWhen checkEnabled="false">
+					<iterate>
+						<adapt type="org.eclipse.core.resources.IResource">
+							<test property="org.eclipse.core.resources.name" value="*.dmodel"/>
+						</adapt>
+					</iterate>
+				</visibleWhen>
+			</command>
+		</menuContribution>
 	</extension>
 </plugin>

@@ -7,9 +7,16 @@
  *******************************************************************************/
 package org.eclipse.xtext.example.arithmetics
 
+import org.eclipse.xtext.example.arithmetics.generator.ArithmeticsDotGenerator
+import org.eclipse.xtext.generator.IGenerator2
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 class ArithmeticsRuntimeModule extends AbstractArithmeticsRuntimeModule {
+	
+	override Class<? extends IGenerator2> bindIGenerator2() {
+		ArithmeticsDotGenerator
+	}
 	
 }

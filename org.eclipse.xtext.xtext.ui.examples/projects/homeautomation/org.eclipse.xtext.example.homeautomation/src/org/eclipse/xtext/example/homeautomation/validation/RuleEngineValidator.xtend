@@ -72,6 +72,14 @@ class RuleEngineValidator extends AbstractRuleEngineValidator {
 	@Check
 	def checkRuleRecursion(XFeatureCall featureCall) {
 		val containingRule = EcoreUtil2.getContainerOfType(featureCall, Rule)
+		if(featureCall.isRecursive) {
+			warning('''Firing the same device state that triggers the rule "«containingRule.description»" may lead to endless recursion.''',
+				featureCall, XFEATURE_CALL__FEATURE_CALL_ARGUMENTS, 0)
+		}
+	}
+	
+	def isRecursive(XFeatureCall featureCall) {
+		val containingRule = EcoreUtil2.getContainerOfType(featureCall, Rule)
 		if (containingRule !== null && featureCall.feature instanceof JvmOperation
 				&& featureCall.concreteSyntaxFeatureName == 'fire'
 				&& featureCall.featureCallArguments.size == 1) {
@@ -79,11 +87,11 @@ class RuleEngineValidator extends AbstractRuleEngineValidator {
 			if (argument instanceof XAbstractFeatureCall) {
 				val sourceElem = argument.feature.primarySourceElement
 				if (sourceElem == containingRule.deviceState) {
-					warning('''Firing the same device state that triggers the rule "«containingRule.description»" may lead to endless recursion.''',
-						featureCall, XFEATURE_CALL__FEATURE_CALL_ARGUMENTS, 0)
+					return true
 				}
 			}
 		}
+		false
 	}
 	
 }

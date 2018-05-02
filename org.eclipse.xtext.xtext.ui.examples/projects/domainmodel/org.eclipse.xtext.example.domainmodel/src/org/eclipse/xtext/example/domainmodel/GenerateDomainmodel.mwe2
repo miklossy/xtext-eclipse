@@ -54,10 +54,10 @@ Workflow {
 			generator = {
 				generateStub = false
 			}
-	 		fragment = CodeMiningFragment {
-				generateStub = true
-				generateXtendStub = false
-			}
+//	 		fragment = CodeMiningFragment {
+//				generateStub = true
+//				generateXtendStub = false
+//			}
 		}
 	}
 }

@@ -4,10 +4,16 @@
 package org.eclipse.xtext.example.fowlerdsl;
 
 import org.eclipse.xtext.example.fowlerdsl.AbstractStatemachineRuntimeModule;
+import org.eclipse.xtext.example.fowlerdsl.generator.StatemachineDotGenerator;
+import org.eclipse.xtext.generator.IGenerator2;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
 public class StatemachineRuntimeModule extends AbstractStatemachineRuntimeModule {
+  @Override
+  public Class<? extends IGenerator2> bindIGenerator2() {
+    return StatemachineDotGenerator.class;
+  }
 }

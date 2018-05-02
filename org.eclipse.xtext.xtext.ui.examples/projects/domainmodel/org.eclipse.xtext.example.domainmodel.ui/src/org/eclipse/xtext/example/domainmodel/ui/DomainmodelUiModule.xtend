@@ -14,6 +14,8 @@ import org.eclipse.xtext.linking.ILinkingDiagnosticMessageProvider
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider
 import org.eclipse.xtext.ui.editor.hyperlinking.IHyperlinkHelper
 import org.eclipse.xtext.ui.editor.outline.actions.IOutlineContribution
+import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.xtext.example.domainmodel.ui.editor.DomainmodelEditorEx
 
 /** 
  * Use this class to register components to be used within the IDE.
@@ -38,5 +40,9 @@ class DomainmodelUiModule extends AbstractDomainmodelUiModule {
 	def void configureFilterOperationsOutlineContribution(Binder binder) {
 		binder.bind(IOutlineContribution).annotatedWith(Names.named("FilterOperationsContribution")).to(
 			FilterOperationsContribution)
+	}
+	
+	override Class<? extends XtextEditor> bindXtextEditor() {
+		DomainmodelEditorEx
 	}
 }
